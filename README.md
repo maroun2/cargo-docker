@@ -11,6 +11,10 @@ sudo curl "https://raw.githubusercontent.com/maroun2/cargo-docker/main/cargo-doc
 
 # Usage:
 ```
+$ cargo-docker
+```
+Output:
+```
 Rust's package manager
 
 USAGE:
