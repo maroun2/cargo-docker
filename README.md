@@ -6,6 +6,7 @@ It is single bash script, that uses docker.io/maron/cargo-lede-sdk docker image 
 # Install:
 ```
 sudo curl "https://raw.githubusercontent.com/maroun2/cargo-docker/main/cargo-docker" > /usr/local/bin/cargo-docker; chmod +x /usr/local/bin/cargo-docker
+
 ```
 
 # Usage:
