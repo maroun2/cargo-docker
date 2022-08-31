@@ -3,7 +3,8 @@
 # check if docker is installed
 if ! [ -x "$(command -v docker)" ]; then
     cat << EOF
-    It seems that docker is not installed, install it by following command in ubuntu:
+    It seems that docker is not installed, install it by official tutorial: https://docs.docker.com/engine/install/
+    Or by commands following commands for ubuntu:
 
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -16,7 +17,6 @@ fi
 
 set -e
 
-MONOREPO_DIR_DOCKER=/src
 DOCKER_SSH_AUTH_SOCK=/ssh-agent
 USER_NAME=build
 # SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
@@ -44,6 +44,7 @@ mkdir -p "$HOME/.cargo/registry"
 # echo "-w $MONOREPO_DIR_DOCKER$CARGO_SUBDIR"
 #echo "ARGS: $ARGS"
 
+docker pull maron/cargo-lede-sdk:1.60.0
 docker run -it --dns=10.33.0.1 --rm \
     -v $HOME/.cargo/registry:/home/$USER_NAME/.cargo/registry \
     -v $HOST_ROOT_DIR:$HOST_ROOT_DIR \
