@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# check if docker is installed
+if ! [ -x "$(command -v docker)" ]; then
+    cat << EOF
+    It seems that docker is not installed, install it by following command in ubuntu:
+
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    sudo apt-get update
+    sudo apt-get install docker-ce
+    sudo usermod -a -G docker $USER
+EOF
+exit 0
+fi
+
+set -e
+
+MONOREPO_DIR_DOCKER=/src
+DOCKER_SSH_AUTH_SOCK=/ssh-agent
+USER_NAME=build
+# SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+# Get monorepo directory from env or mount whole home
+if [[ -z "${MONOREPO_DIR}" ]]; then
+  HOST_ROOT_DIR=/home/$USER
+else
+  HOST_ROOT_DIR=$MONOREPO_DIR
+fi
+
+# Is working directory in HOST_ROOT_DIR dir, or mount PWD as root dir
+if [ "$HOST_ROOT_DIR" == "${PWD:0:${#HOST_ROOT_DIR}}" ]; then
+    CARGO_SUBDIR=${PWD:${#HOST_ROOT_DIR}}
+else
+    CARGO_SUBDIR=""
+    HOST_ROOT_DIR=$PWD
+fi
+
+# shellcheck disable=SC2124
+ARGS="cargo $@"
+mkdir -p "$HOME/.cargo/registry"
+
+# echo "-v $HOST_ROOT_DIR:$MONOREPO_DIR_DOCKER"
+# echo "-w $MONOREPO_DIR_DOCKER$CARGO_SUBDIR"
+#echo "ARGS: $ARGS"
+
+docker run -it --dns=10.33.0.1 --rm \
+    -v $HOME/.cargo/registry:/home/$USER_NAME/.cargo/registry \
+    -v $HOST_ROOT_DIR:$HOST_ROOT_DIR \
+    -v $SSH_AUTH_SOCK:$DOCKER_SSH_AUTH_SOCK -e SSH_AUTH_SOCK=$DOCKER_SSH_AUTH_SOCK \
+    -v $HOME/.ssh/known_hosts:/home/$USER_NAME/.ssh/known_hosts:ro \
+    -w "$HOST_ROOT_DIR$CARGO_SUBDIR" \
+    maron/cargo-lede-sdk:1.60.0 $ARGS
