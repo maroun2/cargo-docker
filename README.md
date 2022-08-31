@@ -5,7 +5,7 @@ It is single bash script, that uses docker.io/maron/cargo-lede-sdk docker image 
 
 # Install:
 ```
-sudo curl "https://raw.githubusercontent.com/maroun2/cargo-docker/main/cargo-docker" > /usr/local/bin/cargo-docker; chmod +x /usr/local/bin/cargo-docker
+sudo sh -c 'curl "https://raw.githubusercontent.com/maroun2/cargo-docker/main/cargo-docker" > /usr/local/bin/cargo-docker && chmod +x /usr/local/bin/cargo-docker'
 
 ```
 
@@ -50,4 +50,10 @@ Some common cargo commands are (see all commands with --list):
     publish     Package and upload this package to the registry
     install     Install a Rust binary. Default location is $HOME/.cargo/bin
     uninstall   Uninstall a Rust binary
+```
+
+# Uninstall
+```
+sudo sh -c 'curl "rm /usr/local/bin/cargo-docker && docker rmi maron/cargo-lede-sdk'
+
 ```
