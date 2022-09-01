@@ -41,5 +41,5 @@ RUN tar -xf /tmp/lede-sdk.tar.xz -C "/home/$USER/sdk/"
 ENV PATH="/home/$USER/sdk/lede-sdk-17.01.6-zynq_gcc-5.4.0_musl-1.1.16_eabi.Linux-x86_64/staging_dir/toolchain-arm_cortex-a9+neon_gcc-5.4.0_musl-1.1.16_eabi/bin:${PATH}"
 # RUN ls -l /home/$USER/sdk/lede-sdk-17.01.6-zynq_gcc-5.4.0_musl-1.1.16_eabi.Linux-x86_64/staging_dir/toolchain-arm_cortex-a9+neon_gcc-5.4.0_musl-1.1.16_eabi/bin
 
-ENV TOOLCHAIN="$HOME/sdk/lede-sdk-17.01.6-zynq_gcc-5.4.0_musl-1.1.16_eabi.Linux-x86_64/staging_dir/toolchain-arm_cortex-a9+neon_gcc-5.4.0_musl-1.1.16_eabi";
-ENV CROSS_COMPILE=arm-openwrt-linux;
+ENV TOOLCHAIN="$HOME/sdk/lede-sdk-17.01.6-zynq_gcc-5.4.0_musl-1.1.16_eabi.Linux-x86_64/staging_dir/toolchain-arm_cortex-a9+neon_gcc-5.4.0_musl-1.1.16_eabi"
+ENV CROSS_COMPILE=arm-openwrt-linux
