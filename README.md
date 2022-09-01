@@ -54,6 +54,6 @@ Some common cargo commands are (see all commands with --list):
 
 # Uninstall
 ```
-sudo sh -c 'curl "rm /usr/local/bin/cargo-docker && docker rmi maron/cargo-lede-sdk'
+sudo sh -c 'curl "rm /usr/local/bin/cargo-docker && docker rmi maron/cargo-lede-sdk:1.60.0'
 
 ```
